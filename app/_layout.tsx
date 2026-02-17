@@ -7,11 +7,13 @@ import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { cssInterop, useColorScheme } from 'nativewind';
 import { useEffect } from 'react';
-import { Image } from 'expo-image';
+import { Image, ImageBackground } from 'expo-image';
 export { ErrorBoundary } from 'expo-router';
 
-
 cssInterop(Image, {
+  className: 'style',
+});
+cssInterop(ImageBackground, {
   className: 'style',
 });
 export default function RootLayout() {
