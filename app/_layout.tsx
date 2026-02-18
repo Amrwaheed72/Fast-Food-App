@@ -8,6 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 import { cssInterop, useColorScheme } from 'nativewind';
 import { useEffect } from 'react';
 import { Image, ImageBackground } from 'expo-image';
+import RouteGuard from '@/components/RouteGuard';
 export { ErrorBoundary } from 'expo-router';
 
 cssInterop(Image, {
@@ -34,10 +35,12 @@ export default function RootLayout() {
   }, [loaded]);
   if (!loaded) return null;
   return (
-    <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-      <Stack screenOptions={{ headerShown: false }} />
-      <PortalHost />
-    </ThemeProvider>
+    <RouteGuard>
+      <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
+        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+        <Stack screenOptions={{ headerShown: false }} />
+        <PortalHost />
+      </ThemeProvider>
+    </RouteGuard>
   );
 }

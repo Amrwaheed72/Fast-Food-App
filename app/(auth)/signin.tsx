@@ -9,51 +9,68 @@ import z from 'zod';
 import { useState } from 'react';
 import { Icon } from '@/components/ui/icon';
 import { Eye, EyeOff } from 'lucide-react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Spinner } from '@/components/ui/spinner';
 import * as Burnt from 'burnt';
+import { useAuth } from '@/store/useAuthStore';
 const schema = z.object({
-  // username: z.string().min(2, 'Username must be at least 2 characters').trim(),
   email: z.email('Please enter a valid email address').trim(),
   password: z.string().min(6, 'Password must be at least 6 characters').trim(),
 });
 type signinSchema = z.infer<typeof schema>;
 const Signin = () => {
   const [isText, setIsText] = useState<boolean>(false);
+  const signin = useAuth((state) => state.signin);
+  const isLoading = useAuth((state) => state.isLoading);
+  const signout = useAuth((state) => state.logout);
   const methods = useForm<signinSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
-      // username: '',
       email: '',
       password: '',
     },
   });
   const {
-    formState: { isSubmitting, errors },
+    formState: { errors },
     setError,
     handleSubmit,
   } = methods;
-  const onSubmit = (data: signinSchema) => {
+  const onSubmit = async (data: signinSchema) => {
     if (!data.email.trim() || !data.password.trim()) return;
-    console.log('a7a');
     try {
+      await signin(data.email, data.password);
       Burnt.toast({
         title: 'Signed in successfully',
       });
       router.replace('/');
     } catch (error) {
-      Burnt.alert({
-        title: error as string,
+      if (error instanceof Error) {
+        Burnt.alert({
+          title: error.message,
+        });
+      }
+      if (error instanceof Error) {
+        setError('root', {
+          message: error.message,
+        });
+      }
+    }
+  };
+  const handleLogout = async () => {
+    try {
+      await signout();
+      Burnt.toast({
+        title: 'Signed out successfully',
       });
-      setError('root', {
-        message: error as string,
+    } catch (error) {
+      Burnt.alert({
+        title: 'errorrrrrrr',
       });
     }
   };
   return (
     <FormProvider {...methods}>
       <View className="mt-5 gap-5 p-5">
-        {errors.root && <p className="text-red-500">{errors.root.message}</p>}
+        {errors.root && <Text className="text-red-500">{errors.root.message}</Text>}
         <FormInput
           placeholder="Enter Your Email"
           name="email"
@@ -75,13 +92,13 @@ const Signin = () => {
             }}
             activeOpacity={0.8}
             className="absolute end-2 top-[45%] p-2">
-            {isText ? <Icon as={EyeOff} size={20} /> : <Icon as={Eye} size={20} />}
+            {isText ? <Icon as={Eye} size={20} /> : <Icon as={EyeOff} size={20} />}
           </TouchableOpacity>
         </FormInput>
-        <Button onPress={ handleSubmit(onSubmit)} disabled={isSubmitting} className="gap-2">
+        <Button onPress={handleSubmit(onSubmit)} disabled={isLoading} className="gap-2">
           <Text className="text-white"> Sign in</Text>
           <View>
-            {isSubmitting && <Spinner variant="ring" size="sm" className="dark:border-white" />}
+            {isLoading && <Spinner variant="ring" size="sm" className="dark:border-white" />}
           </View>
         </Button>
         <View className="flex-row items-center gap-2">

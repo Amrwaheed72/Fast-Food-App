@@ -55,7 +55,7 @@ const FormInput = ({
         )}
       />
       {children}
-      {errorMessage && <Text className="mt-1 ml-2 text-sm text-red-500">{errorMessage}</Text>}
+      {errorMessage && <Text className="ml-2 mt-1 text-sm text-red-500">{errorMessage}</Text>}
     </View>
   );
 };

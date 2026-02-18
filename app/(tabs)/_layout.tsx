@@ -1,7 +1,6 @@
 import { Tabs } from 'expo-router';
-import { Home, Search, User } from 'lucide-react-native';
+import { Home, Search, ShoppingCart, User } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
-import { View } from 'react-native';
 
 const TabsLayout = () => {
   const { colorScheme } = useColorScheme();
@@ -28,7 +27,7 @@ const TabsLayout = () => {
         options={{
           title: 'Cart',
           headerShown: false,
-          tabBarIcon: ({ size, color }) => <User size={size} color={color} />,
+          tabBarIcon: ({ size, color }) => <ShoppingCart size={size} color={color} />,
         }}
       />
       <Tabs.Screen
