@@ -12,6 +12,8 @@ import { Eye, EyeOff } from 'lucide-react-native';
 import { Spinner } from '@/components/ui/spinner';
 import * as Burnt from 'burnt';
 import { useAuth } from '@/store/useAuthStore';
+import * as Sentry from '@sentry/react-native';
+
 const schema = z.object({
   username: z.string().min(2, 'Username must be at least 2 characters').trim(),
   email: z.email('Please enter a valid email address').trim(),
@@ -20,7 +22,7 @@ const schema = z.object({
 type signinSchema = z.infer<typeof schema>;
 
 const Signup = () => {
-  const [isText, setIsText] = useState<boolean>(false);
+  const [isPassword, setIsPassword] = useState<boolean>(true);
   const isLoading = useAuth((state) => state.isLoading);
   const signup = useAuth((state) => state.signup);
   const methods = useForm<signinSchema>({
@@ -44,7 +46,8 @@ const Signup = () => {
         title: 'Signed up successfully',
       });
       router.replace('/');
-    } catch (error) {
+    } catch (error: any) {
+      Sentry.captureEvent(error);
       if (error instanceof Error) {
         Burnt.alert({
           title: error.message,
@@ -79,15 +82,15 @@ const Signup = () => {
           label="Password"
           textContentType="password"
           keyboardType="default"
-          isText={isText}>
+          isPassword={isPassword}>
           <TouchableOpacity
             onPress={(e) => {
               e.stopPropagation();
-              setIsText((prev) => !prev);
+              setIsPassword((prev) => !prev);
             }}
             activeOpacity={0.8}
             className="absolute end-2 top-[45%] p-2">
-            {isText ? <Icon as={Eye} size={20} /> : <Icon as={EyeOff} size={20} />}
+            {isPassword ? <Icon as={Eye} size={20} /> : <Icon as={EyeOff} size={20} />}
           </TouchableOpacity>
         </FormInput>
         <Button onPress={handleSubmit(onSubmit)} disabled={isLoading} className="gap-2">

@@ -12,16 +12,17 @@ import { Eye, EyeOff } from 'lucide-react-native';
 import { Spinner } from '@/components/ui/spinner';
 import * as Burnt from 'burnt';
 import { useAuth } from '@/store/useAuthStore';
+import * as Sentry from '@sentry/react-native';
+
 const schema = z.object({
   email: z.email('Please enter a valid email address').trim(),
   password: z.string().min(6, 'Password must be at least 6 characters').trim(),
 });
 type signinSchema = z.infer<typeof schema>;
 const Signin = () => {
-  const [isText, setIsText] = useState<boolean>(false);
+  const [isPassword, setIsPassword] = useState<boolean>(true);
   const signin = useAuth((state) => state.signin);
   const isLoading = useAuth((state) => state.isLoading);
-  const signout = useAuth((state) => state.logout);
   const methods = useForm<signinSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -42,7 +43,8 @@ const Signin = () => {
         title: 'Signed in successfully',
       });
       router.replace('/');
-    } catch (error) {
+    } catch (error: any) {
+      Sentry.captureEvent(error);
       if (error instanceof Error) {
         Burnt.alert({
           title: error.message,
@@ -53,18 +55,6 @@ const Signin = () => {
           message: error.message,
         });
       }
-    }
-  };
-  const handleLogout = async () => {
-    try {
-      await signout();
-      Burnt.toast({
-        title: 'Signed out successfully',
-      });
-    } catch (error) {
-      Burnt.alert({
-        title: 'errorrrrrrr',
-      });
     }
   };
   return (
@@ -84,15 +74,15 @@ const Signin = () => {
           label="Password"
           textContentType="password"
           keyboardType="default"
-          isText={isText}>
+          isPassword={isPassword}>
           <TouchableOpacity
             onPress={(e) => {
               e.stopPropagation();
-              setIsText((prev) => !prev);
+              setIsPassword((prev) => !prev);
             }}
             activeOpacity={0.8}
             className="absolute end-2 top-[45%] p-2">
-            {isText ? <Icon as={Eye} size={20} /> : <Icon as={EyeOff} size={20} />}
+            {isPassword ? <Icon as={Eye} size={20} /> : <Icon as={EyeOff} size={20} />}
           </TouchableOpacity>
         </FormInput>
         <Button onPress={handleSubmit(onSubmit)} disabled={isLoading} className="gap-2">

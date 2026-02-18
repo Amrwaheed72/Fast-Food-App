@@ -25,7 +25,7 @@ export const useAuth = create<AuthState>((set, get) => ({
   isLoading: true,
   isLoggingOut: false,
   signin: async (email, password) => {
-    set({ isLoading: true });
+    
     try {
       await account.createEmailPasswordSession(email, password);
       await get().getUser();
@@ -38,7 +38,7 @@ export const useAuth = create<AuthState>((set, get) => ({
   },
 
   signup: async (username, email, password) => {
-    set({ isLoading: true });
+    
     try {
       const newAccount = await account.create(ID.unique(), email, password, username);
       if (!newAccount) throw new Error('Account creation failed');

@@ -128,10 +128,6 @@
     @apply font-quicksand-medium text-dark-100 relative flex w-full flex-row items-center justify-center gap-5 rounded-full bg-white shadow-md shadow-black/10;
   }
 
-  .tab-icon {
-    @apply mt-12 flex min-h-full min-w-20 items-center justify-center gap-1;
-  }
-
   .offer-card {
     @apply my-3 flex h-48 w-full items-center gap-5 overflow-hidden rounded-xl shadow-lg;
   }

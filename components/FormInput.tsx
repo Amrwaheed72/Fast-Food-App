@@ -9,7 +9,7 @@ interface Props extends TextInputProps {
   placeholder?: string;
   keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
   label?: string;
-  isText?: boolean;
+  isPassword?: boolean;
   children?: ReactNode;
 }
 
@@ -19,7 +19,7 @@ const FormInput = ({
   keyboardType = 'default',
   textContentType,
   label,
-  isText,
+  isPassword,
   children,
 }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -48,7 +48,7 @@ const FormInput = ({
             autoCapitalize="none"
             keyboardType={keyboardType}
             textContentType={textContentType}
-            secureTextEntry={isText}
+            secureTextEntry={isPassword}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />

@@ -1,6 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
-import { TouchableOpacity, View } from 'react-native';
+import { Button, TouchableOpacity, View } from 'react-native';
 import { offers } from '@/lib/constants';
 import { Text } from '@/components/ui/text';
 import { Image } from 'expo-image';
@@ -9,7 +9,9 @@ import { Icon } from '@/components/ui/icon';
 import { ArrowRight, ChevronDown } from 'lucide-react-native';
 import CartButton from '@/components/CartButton';
 import ThemeToggle from '@/components/ThemeToggle';
-const lineBreak = () => <View className="h-[0.5px] w-full flex-1 bg-gray-200" />;
+import { useAuth } from '@/store/useAuthStore';
+import * as Burnt from 'burnt';
+
 const header = () => (
   <View className="flex-between my-5 w-full flex-row">
     <View className="flex-start">
@@ -24,13 +26,26 @@ const header = () => (
   </View>
 );
 export default function Screen() {
+  const signout = useAuth((state) => state.logout);
+
+  const handleLogout = async () => {
+    try {
+      await signout();
+      Burnt.toast({
+        title: 'Signed out successfully',
+      });
+    } catch (error) {
+      Burnt.alert({
+        title: 'errorrrrrrr',
+      });
+    }
+  };
   return (
     <SafeAreaView className="flex-1">
       <FlashList
         data={offers}
         contentContainerClassName="pb-28 px-5"
         ListHeaderComponent={header}
-        ItemSeparatorComponent={lineBreak}
         renderItem={({ item, index }) => {
           const isEven = index % 2 === 0;
           return (
@@ -41,6 +56,7 @@ export default function Screen() {
                 style={{ backgroundColor: item.color }}>
                 <>
                   <View className="h-full w-1/2">
+                    <Button title="a7a"  onPress={handleLogout}/>
                     <Image
                       source={item.image}
                       className="size-full"
