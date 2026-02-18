@@ -56,7 +56,7 @@ export default function Screen() {
                 style={{ backgroundColor: item.color }}>
                 <>
                   <View className="h-full w-1/2">
-                    <Button title="a7a"  onPress={handleLogout}/>
+                    {/* <Button title="a7a"  onPress={handleLogout}/> */}
                     <Image
                       source={item.image}
                       className="size-full"

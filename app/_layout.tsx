@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { Image, ImageBackground } from 'expo-image';
 import RouteGuard from '@/components/RouteGuard';
 import * as Sentry from '@sentry/react-native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 Sentry.init({
   dsn: 'https://f79a5068d4dcfbcc04808cb203140af3@o4510030059995136.ingest.de.sentry.io/4510905623642192',
@@ -37,6 +38,15 @@ cssInterop(Image, {
 cssInterop(ImageBackground, {
   className: 'style',
 });
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60 * 1000,
+    },
+  },
+});
 export default Sentry.wrap(function RootLayout() {
   const { colorScheme } = useColorScheme();
   const [loaded, error] = useFonts({
@@ -56,11 +66,13 @@ export default Sentry.wrap(function RootLayout() {
   if (!loaded) return null;
   return (
     <RouteGuard>
-      <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
-        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-        <Stack screenOptions={{ headerShown: false }} />
-        <PortalHost />
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
+          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+          <Stack screenOptions={{ headerShown: false }} />
+          <PortalHost />
+        </ThemeProvider>
+      </QueryClientProvider>
     </RouteGuard>
   );
 });

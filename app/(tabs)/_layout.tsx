@@ -2,9 +2,7 @@ import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { Tabs } from 'expo-router';
 import { Home, LucideIcon, Search, ShoppingCart, User } from 'lucide-react-native';
-import { useColorScheme } from 'nativewind';
 import { View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const TabIcon = ({
   size,
@@ -17,9 +15,9 @@ const TabIcon = ({
   icon: LucideIcon;
   title: string;
 }) => (
-  <View className="mt-12 min-h-full min-w-20 items-center justify-center gap-1">
+  <View className={`mt-12 min-h-full min-w-20 items-center justify-center gap-1`}>
     <Icon as={icon} size={size} color={focused ? '#fe8000' : '#5d5f6d'} />
-    <Text className={`text-center text-xs ${focused ? 'text-[#fe8000]' : 'text-[#5d5f6d]'}`}>
+    <Text className={`text-center text-xs ${focused ? 'text-orange-500' : 'text-gray-500'}`}>
       {title}
     </Text>
   </View>
