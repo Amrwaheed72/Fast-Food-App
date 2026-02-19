@@ -73,25 +73,12 @@
 
 @layer components {
   .cart-btn {
-    @apply bg-dark-100 flex size-10 items-center justify-center rounded-full;
+    @apply flex size-10 items-center justify-center rounded-full bg-dark-100;
   }
 
   .cart-badge {
     @apply absolute -right-1 -top-2 flex size-4 items-center justify-center rounded-full bg-primary;
   }
-
-  .cart-item {
-    @apply shadow-dark-100/10 mb-4 flex flex-row items-end justify-between rounded-xl bg-white p-3 shadow-md;
-  }
-
-  .cart-item__image {
-    @apply flex size-24 items-center justify-center rounded-lg bg-primary/10;
-  }
-
-  .cart-item__actions {
-    @apply flex size-5 flex-row items-center justify-center rounded-md bg-primary/10;
-  }
-
   .custom-btn {
     @apply flex w-full flex-row justify-center rounded-full bg-primary p-3;
   }
@@ -101,11 +88,11 @@
   }
 
   .label {
-    @apply font-quicksand-medium w-full pl-2 text-start text-base text-gray-500;
+    @apply w-full pl-2 text-start font-quicksand-medium text-base text-gray-500;
   }
 
   .input {
-    @apply font-quicksand-semibold text-dark-100 w-full rounded-lg border-b p-3 text-base leading-5;
+    @apply w-full rounded-lg border-b p-3 font-quicksand-semibold text-base leading-5 text-dark-100;
   }
 
   .filter {
@@ -113,7 +100,7 @@
   }
 
   .menu-card {
-    @apply relative flex items-center justify-end rounded-3xl bg-white px-3.5 py-9 pt-24 shadow-md shadow-black/10;
+    @apply relative flex items-center justify-end rounded-3xl bg-white px-3.5 py-9 pt-24 shadow-md shadow-black/60 dark:bg-black dark:shadow-orange-600;
   }
 
   .profile-field {
@@ -125,7 +112,7 @@
   }
 
   .searchbar {
-    @apply font-quicksand-medium text-dark-100 relative flex w-full flex-row items-center justify-center gap-5 rounded-full bg-white shadow-md shadow-black/10;
+    @apply relative flex w-full flex-row items-center justify-center gap-5 rounded-full bg-white font-quicksand-medium text-dark-100 shadow-md shadow-black/10;
   }
 
   .offer-card {

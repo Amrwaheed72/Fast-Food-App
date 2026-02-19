@@ -30,16 +30,16 @@ const RouteGuard = ({ children }: { children: ReactNode }) => {
     }
   }, [user, isLoading, router, segment]);
 
-  if (isLoading)
-    return (
-      <SafeAreaView
-        className={`flex-1 items-center justify-center ${colorScheme === 'dark' ? 'bg-black' : 'bg-white'}`}>
-        <View className="flex-1 items-center justify-center">
-          <Image source={colorScheme === 'dark' ? logoDark : logoLight} className="size-72"></Image>
-          <Text className="font-quicksand-bold text-4xl tracking-widest ">Fast Food</Text>
-        </View>
-      </SafeAreaView>
-    );
+  // if (isLoading)
+  //   return (
+  //     <SafeAreaView
+  //       className={`flex-1 items-center justify-center ${colorScheme === 'dark' ? 'bg-black' : 'bg-white'}`}>
+  //       <View className="flex-1 items-center justify-center">
+  //         <Image source={colorScheme === 'dark' ? logoDark : logoLight} className="size-72"></Image>
+  //         <Text className="font-quicksand-bold text-4xl tracking-widest ">Fast Food</Text>
+  //       </View>
+  //     </SafeAreaView>
+  //   );
   return <>{children}</>;
 };
 

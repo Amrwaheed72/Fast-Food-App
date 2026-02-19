@@ -21,8 +21,10 @@ const header = () => (
         <Icon as={ChevronDown} size={15} />
       </TouchableOpacity>
     </View>
-    <CartButton />
-    <ThemeToggle />
+    <View className="flex-row items-center gap-2">
+      <ThemeToggle />
+      <CartButton />
+    </View>
   </View>
 );
 export default function Screen() {
@@ -42,6 +44,9 @@ export default function Screen() {
   };
   return (
     <SafeAreaView className="flex-1">
+      {/* <TouchableOpacity onPress={handleLogout}>
+        <Text>asfasf</Text>
+      </TouchableOpacity> */}
       <FlashList
         data={offers}
         contentContainerClassName="pb-28 px-5"
@@ -56,7 +61,6 @@ export default function Screen() {
                 style={{ backgroundColor: item.color }}>
                 <>
                   <View className="h-full w-1/2">
-                    {/* <Button title="a7a"  onPress={handleLogout}/> */}
                     <Image
                       source={item.image}
                       className="size-full"

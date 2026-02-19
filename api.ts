@@ -14,13 +14,13 @@ export const getMenu = async (filter: string, query: string) => {
   try {
     const buildQuery = [Query.orderDesc('$createdAt')];
     if (filter) {
-      buildQuery.push(Query.equal('categories', filter));
+      buildQuery.push(Query.equal('category_name', filter));
     }
     if (query) {
       buildQuery.push(Query.search('name', query));
     }
     const menus = await databases.listDocuments(databaseId, menuCollectionId, buildQuery);
-    return menus.documents as unknown as MenusProps;
+    return menus.documents as unknown as MenusProps[];
   } catch (error) {
     throw error;
   }
@@ -28,7 +28,7 @@ export const getMenu = async (filter: string, query: string) => {
 export const getCategories = async () => {
   try {
     const categories = await databases.listDocuments(databaseId, categoriesCollectionId);
-    return categories.documents as unknown as CategoriesProps;
+    return categories.documents as unknown as CategoriesProps[];
   } catch (error) {
     throw error;
   }

@@ -20,3 +20,18 @@ export interface CategoriesProps extends Models.Document {
   description: string;
   menu: string;
 }
+export interface CartCustomization {
+  id: string;
+  name: string;
+  price: number;
+  type: string;
+}
+
+export interface cartItems {
+  id: string;
+  name: string;
+  price: number;
+  image_url: string;
+  quantity: number;
+  customizations?: CartCustomization[];
+}
